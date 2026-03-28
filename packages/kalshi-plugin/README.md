@@ -1,6 +1,6 @@
 # kalshi-plugin
 
-Scaffold for a private-first OpenClaw plugin that integrates with the Kalshi API.
+Private-first OpenClaw plugin scaffold for Kalshi API integration.
 
 ## Planned v1
 - signed auth client
@@ -11,3 +11,10 @@ Scaffold for a private-first OpenClaw plugin that integrates with the Kalshi API
 - market / strategy arming
 - kill switch
 - SQLite audit trail
+- opportunity ranking and size suggestion helpers
+
+## Current scaffold
+- config model draft
+- tool schema draft
+- SQLite migration scaffold
+- initial risk gate skeleton

@@ -1,13 +1,13 @@
-from dataclasses import dataclass
+from __future__ import annotations
+
+from pathlib import Path
+
+from .models import PluginConfig
 
 
-@dataclass(slots=True)
-class EnvironmentConfig:
-    environment: str = "sandbox"
-    production_enabled: bool = False
+def load_default_config() -> PluginConfig:
+    return PluginConfig()
 
 
-@dataclass(slots=True)
-class CredentialConfig:
-    api_key: str = ""
-    api_secret: str = ""
+def resolve_db_path(config: PluginConfig) -> Path:
+    return Path(config.storage.path).expanduser().resolve()
