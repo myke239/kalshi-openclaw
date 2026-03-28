@@ -18,3 +18,14 @@ Private-first OpenClaw plugin scaffold for Kalshi API integration.
 - tool schema draft
 - SQLite migration scaffold
 - initial risk gate skeleton
+
+## Dev setup
+
+Create a virtual environment and install dev dependencies:
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install --upgrade pip
+.\.venv\Scripts\python.exe -m pip install -e .[dev]
+.\.venv\Scripts\python.exe -m pytest
+```

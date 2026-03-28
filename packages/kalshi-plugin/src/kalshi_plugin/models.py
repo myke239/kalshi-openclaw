@@ -10,13 +10,13 @@ StrategyName = Literal["event-driven", "momentum", "edge-hunting"]
 CategoryName = Literal["politics", "crypto", "weather"]
 
 
-@dataclass(slots=True)
+@dataclass
 class StorageConfig:
     driver: Literal["sqlite"] = "sqlite"
     path: Path = Path("./data/kalshi.db")
 
 
-@dataclass(slots=True)
+@dataclass
 class RiskDefaults:
     max_per_trade_dollars: float = 50.0
     max_per_market_exposure: float = 200.0
@@ -26,7 +26,7 @@ class RiskDefaults:
     correlation_caps_enabled: bool = True
 
 
-@dataclass(slots=True)
+@dataclass
 class RiskConfig:
     kill_switch: bool = False
     duplicate_trade_prevention: bool = True
@@ -38,7 +38,7 @@ class RiskConfig:
     defaults: RiskDefaults = field(default_factory=RiskDefaults)
 
 
-@dataclass(slots=True)
+@dataclass
 class ArmingConfig:
     enabled: bool = True
     default_expiry: ExpiryMode = "market_close"
@@ -47,7 +47,7 @@ class ArmingConfig:
     permit_mode: Literal["either"] = "either"
 
 
-@dataclass(slots=True)
+@dataclass
 class AnalysisConfig:
     default_opportunity_count: int = 5
     include_confidence: bool = True
@@ -56,19 +56,19 @@ class AnalysisConfig:
     enabled_strategies: list[StrategyName] = field(default_factory=lambda: ["event-driven", "momentum", "edge-hunting"])
 
 
-@dataclass(slots=True)
+@dataclass
 class CredentialConfig:
     api_key: str = ""
     api_secret: str = ""
 
 
-@dataclass(slots=True)
+@dataclass
 class EnvironmentConfig:
     environment: EnvironmentName = "sandbox"
     production_enabled: bool = False
 
 
-@dataclass(slots=True)
+@dataclass
 class PluginConfig:
     environment: EnvironmentConfig = field(default_factory=EnvironmentConfig)
     credentials: CredentialConfig = field(default_factory=CredentialConfig)

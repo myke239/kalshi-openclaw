@@ -7,6 +7,10 @@
 - storage helper scaffold
 - risk executor skeleton
 - skill reference expansion
+- local Python dev setup scaffold via pyproject optional dependencies
+
+## Environment note
+Current host Python is 3.9, so package metadata has been aligned to `>=3.9` for local development.
 
 ## Immediate next tasks
 1. replace placeholder config loading with validated file parsing

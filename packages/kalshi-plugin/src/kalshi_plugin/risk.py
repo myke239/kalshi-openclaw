@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from .models import PluginConfig
 
 
-@dataclass(slots=True)
+@dataclass
 class OrderIntent:
     market_id: str
     side: str
@@ -15,7 +15,7 @@ class OrderIntent:
     opens_position: bool = True
 
 
-@dataclass(slots=True)
+@dataclass
 class AuthorizationResult:
     allowed: bool
     reasons: list[str]
