@@ -1,0 +1,11 @@
+[project]
+name = "kalshi-plugin"
+version = "0.1.0"
+description = "OpenClaw Kalshi plugin scaffold"
+requires-python = ">=3.11"
+authors = [{ name = "Michael" }]
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"

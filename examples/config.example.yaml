@@ -1,0 +1,27 @@
+environment: sandbox
+production_enabled: false
+
+credentials:
+  api_key: CHANGE_ME
+  api_secret: CHANGE_ME
+
+storage:
+  driver: sqlite
+  path: ./data/kalshi.db
+
+risk:
+  kill_switch: false
+  duplicate_trade_prevention: true
+  defaults:
+    max_per_trade_dollars: 50
+    max_per_market_exposure: 200
+    max_daily_loss: 100
+    stop_loss_pct: 20
+    take_profit_pct: 35
+
+analysis:
+  default_opportunity_count: 5
+  tuned_categories:
+    - politics
+    - crypto
+    - weather

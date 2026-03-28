@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+ruff_cache/
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+*.skill
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Local data / secrets
+.env
+.env.*
+*.db
+*.sqlite
+*.sqlite3
+data/
+secrets/
+
+# Logs
+*.log

@@ -1,0 +1,7 @@
+{
+  "name": "kalshi-plugin",
+  "version": "0.1.0",
+  "description": "Kalshi API integration plugin for OpenClaw with risk-gated trading workflows.",
+  "private": true,
+  "entrypoint": "src.kalshi_plugin.plugin:Plugin"
+}
