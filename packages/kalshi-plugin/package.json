@@ -1,0 +1,22 @@
+{
+  "name": "@myke239/openclaw-kalshi-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "openclaw": {
+    "extensions": ["./index.ts"]
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.49",
+    "kalshi-typescript": "^3.10.0",
+    "openclaw": "^2026.3.24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.5.2",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "id": "kalshi-plugin",
+  "name": "Kalshi Plugin",
+  "description": "Kalshi API integration plugin for OpenClaw with risk-gated trading workflows.",
+  "version": "0.1.0",
+  "skills": [
+    "../kalshi-trading-skill",
+    "../kalshi-strategy-lab"
+  ],
+  "uiHints": {
+    "apiKey": {
+      "label": "Kalshi API key",
+      "sensitive": true
+    },
+    "apiSecret": {
+      "label": "Kalshi RSA private key PEM",
+      "sensitive": true,
+      "multiline": true
+    },
+    "productionEnabled": {
+      "label": "Enable production trading",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "environment": {
+        "type": "string",
+        "enum": ["sandbox", "production"]
+      },
+      "productionEnabled": {
+        "type": "boolean"
+      },
+      "apiKey": {
+        "type": "string"
+      },
+      "apiSecret": {
+        "type": "string"
+      },
+      "baseUrl": {
+        "type": "string"
+      }
+    },
+    "required": ["environment", "productionEnabled", "apiKey", "apiSecret"]
+  }
+}

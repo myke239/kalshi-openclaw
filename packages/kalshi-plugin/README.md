@@ -1,31 +1,28 @@
 # kalshi-plugin
 
-Private-first OpenClaw plugin scaffold for Kalshi API integration.
+Native OpenClaw plugin for Kalshi API integration.
 
-## Planned v1
-- signed auth client
-- sandbox / production environment separation
-- account, portfolio, and market tools
-- order preview / place / cancel / reduce / close
-- central risk executor
-- market / strategy arming
-- kill switch
-- SQLite audit trail
-- opportunity ranking and size suggestion helpers
+## v1 scope
+- account balance / positions / orders / fills
+- market search and orderbook reads
+- order preview and live order placement
+- local arming and kill switch controls
+- duplicate-trade prevention
+- simple ranked opportunity output
 
-## Current scaffold
-- config model draft
-- tool schema draft
-- SQLite migration scaffold
-- initial risk gate skeleton
+## Config
+The plugin expects OpenClaw plugin config fields:
+- `environment`: `sandbox` or `production`
+- `productionEnabled`: boolean
+- `apiKey`: Kalshi API key id
+- `apiSecret`: Kalshi RSA private key PEM
+- `baseUrl`: optional override
 
-## Dev setup
+## Safety model
+- live production trading must be explicitly enabled
+- opening trades require market or strategy arming
+- kill switch blocks new opens
+- duplicate trades are blocked for same market + strategy + side
 
-Create a virtual environment and install dev dependencies:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install -e .[dev]
-.\.venv\Scripts\python.exe -m pytest
-```
+## Status
+This package is now the canonical implementation path. The earlier Python scaffolding is retained only as reference/prototyping material and should not be treated as the final plugin runtime.

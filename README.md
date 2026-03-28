@@ -4,19 +4,37 @@ Private-first monorepo for Kalshi support in OpenClaw.
 
 ## Packages
 
-- `packages/kalshi-plugin` - Kalshi API integration plugin scaffold
+- `packages/kalshi-plugin` - native OpenClaw Kalshi plugin
 - `packages/kalshi-trading-skill` - safe operational trading skill
 - `packages/kalshi-strategy-lab` - experimental strategy and simulation skill
 
 ## Current status
 
-Scaffolded repository structure only. No live trading logic is implemented yet.
+The repo now includes a compiling native TypeScript OpenClaw plugin using Kalshi's official TypeScript SDK, plus two companion skills.
 
-## Next build targets
+## Current v1 tool surface
 
-1. Define plugin config schema
-2. Implement signed Kalshi client
-3. Add SQLite state and audit storage
-4. Implement risk executor and arming state
-5. Add OpenClaw tool registration
-6. Flesh out skill references and packaging
+- account balance
+- positions list
+- orders list
+- fills list
+- market search
+- market details
+- orderbook read
+- order preview
+- order placement
+- order cancel
+- market arming
+- strategy arming
+- market/strategy disarm
+- kill switch toggle
+- local risk status
+- ranked opportunities
+
+## Remaining work before v1 is actually done
+
+1. add close/reduce position helpers
+2. add stronger config/setup UX
+3. add Node-side tests
+4. validate against Kalshi sandbox credentials
+5. package for install/testing in OpenClaw

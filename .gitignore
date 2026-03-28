@@ -29,6 +29,9 @@ Thumbs.db
 *.sqlite3
 data/
 secrets/
+local.sandbox.json
+.kalshi-plugin/
+node_modules/
 
 # Logs
 *.log

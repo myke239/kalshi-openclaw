@@ -1,0 +1,12 @@
+{
+  "name": "kalshi-openclaw",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @myke239/openclaw-kalshi-plugin",
+    "test": "npm run test -w @myke239/openclaw-kalshi-plugin"
+  }
+}
