@@ -8,6 +8,7 @@ The final installable OpenClaw plugin implementation is now TypeScript/Node.
 
 ## Current status
 - plugin package compiles via `tsc`
+- plugin npm package name now matches manifest id (`kalshi-plugin`)
 - OpenClaw tool registration shape patched to match local SDK requirements
 - Kalshi SDK is used for account, market, and order operations
 - local JSON state tracks kill switch, arming, duplicate prevention audit

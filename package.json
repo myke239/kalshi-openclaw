@@ -6,7 +6,7 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "npm run build -w @myke239/openclaw-kalshi-plugin",
-    "test": "npm run test -w @myke239/openclaw-kalshi-plugin"
+    "build": "npm run build -w kalshi-plugin",
+    "test": "npm run test -w kalshi-plugin"
   }
 }

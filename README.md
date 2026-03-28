@@ -4,7 +4,7 @@ Private-first monorepo for Kalshi support in OpenClaw.
 
 ## Packages
 
-- `packages/kalshi-plugin` - native OpenClaw Kalshi plugin
+- `packages/kalshi-plugin` - native OpenClaw Kalshi plugin (`kalshi-plugin`)
 - `packages/kalshi-trading-skill` - safe operational trading skill
 - `packages/kalshi-strategy-lab` - experimental strategy and simulation skill
 
