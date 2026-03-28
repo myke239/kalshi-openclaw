@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.49",
-    "kalshi-typescript": "^3.10.0",
     "openclaw": "^2026.3.24"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ import { KalshiClient } from "./client.js";
 import { RiskEngine } from "./risk.js";
 import { LocalStateService } from "./state.js";
 import { summarizeBalance, summarizeOrders, summarizePositions } from "./summary.js";
+import { buildCreateOrderPayload } from "./order-payload.js";
 import type {
   ArmMarketParams,
   ArmStrategyParams,
@@ -22,10 +23,6 @@ function requireCredentials(config: KalshiPluginConfig): void {
   }
 }
 
-function invertSide(side: "yes" | "no"): "yes" | "no" {
-  return side === "yes" ? "no" : "yes";
-}
-
 export function createKalshiServices(api: { config?: unknown }) {
   const config = getPluginConfig(api);
   const state = new LocalStateService(new JsonStateStore(createStateRoot()));
@@ -39,52 +36,30 @@ export function createKalshiServices(api: { config?: unknown }) {
   return {
     account: {
       async getAccount() {
-        const result = await client().portfolio.getBalance();
-        return summarizeBalance(result.data);
+        return summarizeBalance(await client().getBalance());
       },
       async getPositions() {
-        const result = await client().portfolio.getPositions();
-        return summarizePositions(result.data);
+        return summarizePositions(await client().getPositions());
       },
       async getOrders() {
-        const result = await client().orders.getOrders();
-        return summarizeOrders(result.data);
+        return summarizeOrders(await client().getOrders());
       },
       async getFills() {
-        const result = await client().portfolio.getFills();
-        return result.data;
+        return await client().getFills();
       },
     },
     markets: {
       async searchMarkets(params: SearchMarketsParams) {
-        const result = await client().markets.getMarkets(
-          params.limit,
-          params.cursor,
-          params.eventTicker,
-          params.seriesTicker,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          params.status,
-          params.query,
-        );
-        return result.data;
+        return await client().getMarkets(params);
       },
       async getMarket(ticker: string) {
-        const result = await client().markets.getMarket(ticker);
-        return result.data;
+        return await client().getMarket(ticker);
       },
       async getOrderbook(ticker: string, depth?: number) {
-        const result = await client().markets.getMarketOrderbook(ticker, depth);
-        return result.data;
+        return await client().getOrderbook(ticker, depth);
       },
       async getTrades(ticker?: string, limit?: number, cursor?: string) {
-        const result = await client().markets.getTrades(limit, cursor, ticker);
-        return result.data;
+        return await client().getTrades(ticker, limit, cursor);
       },
     },
     orders: {
@@ -102,63 +77,59 @@ export function createKalshiServices(api: { config?: unknown }) {
           return { ok: false, risk: riskResult };
         }
 
-        const payload = {
-          ticker: params.ticker,
-          side: params.side,
-          action: params.action,
-          count: params.count,
-          yes_price: params.yesPrice,
-          no_price: params.noPrice,
-          client_order_id: params.clientOrderId,
-          reduce_only: params.reduceOnly,
-        };
-
-        const result = await client().orders.createOrder(payload as any);
-        state.appendAudit({ type: "place-order", order: params, result: result.data });
-        return result.data;
+        const payload = buildCreateOrderPayload(params);
+        const result = await client().createOrder(payload);
+        state.appendAudit({ type: "place-order", order: params, result });
+        return result;
       },
       async cancelOrder(orderId: string) {
-        const result = await client().orders.cancelOrder(orderId);
-        state.appendAudit({ type: "cancel-order", orderId, result: result.data });
-        return result.data;
+        const result = await client().cancelOrder(orderId);
+        state.appendAudit({ type: "cancel-order", orderId, result });
+        return result;
       },
-      async reducePosition(params: { ticker: string; count: number; side: "yes" | "no"; clientOrderId?: string }) {
-        const payload = {
+      async reducePosition(params: { ticker: string; count: number; side: "yes" | "no"; clientOrderId?: string; yesPrice?: number; noPrice?: number }) {
+        const payload = buildCreateOrderPayload({
           ticker: params.ticker,
           side: params.side,
           action: "sell",
           count: params.count,
-          client_order_id: params.clientOrderId,
-          reduce_only: true,
-        };
-        const result = await client().orders.createOrder(payload as any);
-        state.appendAudit({ type: "reduce-position", params, result: result.data });
-        return result.data;
+          clientOrderId: params.clientOrderId,
+          yesPrice: params.yesPrice,
+          noPrice: params.noPrice,
+          reduceOnly: true,
+        });
+        const result = await client().createOrder(payload);
+        state.appendAudit({ type: "reduce-position", params, result });
+        return result;
       },
       async closePosition(ticker: string) {
-        const positions = await client().portfolio.getPositions(undefined, undefined, undefined, ticker);
-        const match = positions.data.market_positions?.find((position: any) => position.ticker === ticker);
+        const positions = await client().getPositions(ticker);
+        const match = Array.isArray(positions?.market_positions)
+          ? positions.market_positions.find((position: any) => position.ticker === ticker)
+          : null;
         if (!match) {
           return { ok: false, reason: "no position found for ticker" };
         }
 
-        const rawPosition = Number(match.position_fp ?? 0);
+        const rawPosition = Number(match.position ?? match.position_fp ?? 0);
         if (!Number.isFinite(rawPosition) || rawPosition === 0) {
           return { ok: false, reason: "position size is zero" };
         }
 
         const side = rawPosition > 0 ? "yes" : "no";
         const count = Math.abs(Math.trunc(rawPosition));
-        const payload = {
+        const payload = buildCreateOrderPayload({
           ticker,
           side,
           action: "sell",
           count,
-          reduce_only: true,
-        };
-        const result = await client().orders.createOrder(payload as any);
-        state.appendAudit({ type: "close-position", ticker, payload, result: result.data });
-        return result.data;
+          yesPrice: 0.01,
+          noPrice: undefined,
+          reduceOnly: true,
+        });
+        const result = await client().createOrder(payload);
+        state.appendAudit({ type: "close-position", ticker, payload, result });
+        return result;
       },
     },
     controls: {
@@ -183,22 +154,14 @@ export function createKalshiServices(api: { config?: unknown }) {
     },
     analysis: {
       async rankOpportunities(params: SearchMarketsParams & { count?: number }) {
-        const result = await client().markets.getMarkets(
-          params.count ?? 5,
-          undefined,
-          params.eventTicker,
-          params.seriesTicker,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          undefined,
-          params.status ?? "open",
-          params.query,
-        );
-        const markets = Array.isArray((result.data as any)?.markets) ? (result.data as any).markets : [];
+        const result = await client().getMarkets({
+          limit: params.count ?? 5,
+          eventTicker: params.eventTicker,
+          seriesTicker: params.seriesTicker,
+          status: params.status ?? "open",
+          query: params.query,
+        });
+        const markets = Array.isArray(result?.markets) ? result.markets : [];
         const ranked = markets.slice(0, params.count ?? 5).map((market: any, index: number) => ({
           rank: index + 1,
           ticker: market.ticker,

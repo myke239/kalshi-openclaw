@@ -10,7 +10,7 @@ Private-first monorepo for Kalshi support in OpenClaw.
 
 ## Current status
 
-The repo now includes a compiling native TypeScript OpenClaw plugin using Kalshi's official TypeScript SDK, plus two companion skills.
+The repo includes a loading native TypeScript OpenClaw plugin with sandbox-validated Kalshi integration and two companion skills.
 
 ## Current v1 tool surface
 
@@ -24,6 +24,8 @@ The repo now includes a compiling native TypeScript OpenClaw plugin using Kalshi
 - order preview
 - order placement
 - order cancel
+- position reduce
+- position close
 - market arming
 - strategy arming
 - market/strategy disarm
@@ -31,10 +33,21 @@ The repo now includes a compiling native TypeScript OpenClaw plugin using Kalshi
 - local risk status
 - ranked opportunities
 
-## Remaining work before v1 is actually done
+## Local developer workflow
 
-1. add close/reduce position helpers
-2. add stronger config/setup UX
-3. add Node-side tests
-4. validate against Kalshi sandbox credentials
-5. package for install/testing in OpenClaw
+### Install / update locally
+
+```powershell
+.\scripts\install-local-plugin.ps1
+```
+
+### Then verify
+
+```powershell
+openclaw plugins inspect kalshi-plugin --json
+openclaw plugins doctor
+```
+
+## Current caveat
+
+The plugin is sandbox-test ready, but the local install/update flow still relies on the helper script rather than a polished package release path.

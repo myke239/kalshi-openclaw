@@ -9,6 +9,7 @@ Native OpenClaw plugin for Kalshi API integration.
 - local arming and kill switch controls
 - duplicate-trade prevention
 - simple ranked opportunity output
+- reduce / close helpers for sandbox-tested lifecycle checks
 
 ## Config
 The plugin supports these OpenClaw plugin config fields:
@@ -26,5 +27,14 @@ Install-time config may be empty. Live API calls fail until credentials are conf
 - kill switch blocks new opens
 - duplicate trades are blocked for same market + strategy + side
 
+## Local install / update
+From repo root:
+
+```powershell
+.\scripts\install-local-plugin.ps1
+```
+
+That script builds the plugin, syncs it into the local OpenClaw extensions directory, installs runtime deps there, and inspects the loaded plugin.
+
 ## Status
-This package is now the canonical implementation path. The earlier Python scaffolding is retained only as reference/prototyping material and should not be treated as the final plugin runtime.
+This package is sandbox-test ready, not production-ready. Core sandbox reads, place/cancel, and filled-position reduce lifecycle have been validated. Packaging for public beta still needs cleanup.
