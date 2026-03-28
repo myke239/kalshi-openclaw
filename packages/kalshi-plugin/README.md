@@ -11,12 +11,14 @@ Native OpenClaw plugin for Kalshi API integration.
 - simple ranked opportunity output
 
 ## Config
-The plugin expects OpenClaw plugin config fields:
-- `environment`: `sandbox` or `production`
-- `productionEnabled`: boolean
+The plugin supports these OpenClaw plugin config fields:
+- `environment`: `sandbox` or `production` (defaults to `sandbox`)
+- `productionEnabled`: boolean (defaults to `false`)
 - `apiKey`: Kalshi API key id
 - `apiSecret`: Kalshi RSA private key PEM
 - `baseUrl`: optional override
+
+Install-time config may be empty. Live API calls fail until credentials are configured.
 
 ## Safety model
 - live production trading must be explicitly enabled

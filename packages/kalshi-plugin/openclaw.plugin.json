@@ -28,21 +28,24 @@
     "properties": {
       "environment": {
         "type": "string",
-        "enum": ["sandbox", "production"]
+        "enum": ["sandbox", "production"],
+        "default": "sandbox"
       },
       "productionEnabled": {
-        "type": "boolean"
+        "type": "boolean",
+        "default": false
       },
       "apiKey": {
-        "type": "string"
+        "type": "string",
+        "default": ""
       },
       "apiSecret": {
-        "type": "string"
+        "type": "string",
+        "default": ""
       },
       "baseUrl": {
         "type": "string"
       }
-    },
-    "required": ["environment", "productionEnabled", "apiKey", "apiSecret"]
+    }
   }
 }
