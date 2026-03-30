@@ -8,7 +8,7 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "test": "node --test"
+    "test": "npm run build && node --test dist/src/ts/services.test.js"
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.49",

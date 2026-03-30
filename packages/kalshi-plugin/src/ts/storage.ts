@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import Database from "node:sqlite";
 
@@ -36,5 +37,9 @@ export class JsonStateStore {
 }
 
 export function createStateRoot(pluginId = "kalshi-plugin"): string {
-  return path.join(process.cwd(), ".kalshi-plugin", pluginId);
+  const override = process.env.KALSHI_PLUGIN_STATE_ROOT?.trim();
+  if (override) {
+    return path.join(override, pluginId);
+  }
+  return path.join(os.homedir(), ".kalshi-plugin", pluginId);
 }

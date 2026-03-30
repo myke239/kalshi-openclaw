@@ -1,10 +1,10 @@
 # Kalshi OpenClaw Spec
 
-This repository tracks a three-package design:
+This repository tracks a three-package design (skills are bundled under the plugin for OpenClaw):
 
 - kalshi-plugin
-- kalshi-trading-skill
-- kalshi-strategy-lab
+- kalshi-trading-skill (`packages/kalshi-plugin/skills/kalshi-trading-skill`)
+- kalshi-strategy-lab (`packages/kalshi-plugin/skills/kalshi-strategy-lab`)
 
 ## Locked product decisions
 

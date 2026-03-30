@@ -4,8 +4,8 @@
   "description": "Kalshi API integration plugin for OpenClaw with risk-gated trading workflows.",
   "version": "0.1.0",
   "skills": [
-    "../kalshi-trading-skill",
-    "../kalshi-strategy-lab"
+    "skills/kalshi-trading-skill",
+    "skills/kalshi-strategy-lab"
   ],
   "uiHints": {
     "apiKey": {
