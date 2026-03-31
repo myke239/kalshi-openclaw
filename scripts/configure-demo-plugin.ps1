@@ -1,8 +1,13 @@
 param(
-  [string]$OpenClawConfig = "C:\Users\Mr Claw\.openclaw\openclaw.json"
+  [string]$OpenClawConfig = ""
 )
 
+if ([string]::IsNullOrWhiteSpace($OpenClawConfig)) {
+  $OpenClawConfig = [System.IO.Path]::Combine($env:USERPROFILE, '.openclaw', 'openclaw.json')
+}
+
 Write-Host "Edit your OpenClaw config and add plugin config for kalshi-plugin under the plugin config section."
+Write-Host "Expected config file path: $OpenClawConfig"
 Write-Host "Recommended demo config fields:"
 Write-Host @'
 {

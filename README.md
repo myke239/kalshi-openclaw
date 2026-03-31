@@ -37,9 +37,23 @@ The repo includes a loading native TypeScript OpenClaw plugin with sandbox-valid
 
 ### Install / update locally
 
+From the repo root, either:
+
+**Windows (PowerShell)** — defaults to this repo (via `$PSScriptRoot`) and `%USERPROFILE%\.openclaw\extensions\kalshi-plugin`:
+
 ```powershell
 .\scripts\install-local-plugin.ps1
 ```
+
+Optional overrides: `-RepoRoot <path>` and `-ExtensionRoot <path>`.
+
+**Any OS (Node)** — same destinations; uses `~/.openclaw/extensions/kalshi-plugin` on Unix and the equivalent under your user profile on Windows:
+
+```bash
+npm run install:openclaw
+```
+
+Overrides: `KALSHI_REPO_ROOT` and `KALSHI_EXTENSION_ROOT`.
 
 ### Then verify
 

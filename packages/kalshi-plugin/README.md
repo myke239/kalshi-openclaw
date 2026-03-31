@@ -28,13 +28,15 @@ Install-time config may be empty. Live API calls fail until credentials are conf
 - duplicate trades are blocked for same market + strategy + side
 
 ## Local install / update
-From repo root:
+From the monorepo root:
 
 ```powershell
 .\scripts\install-local-plugin.ps1
 ```
 
-That script builds the plugin, syncs it into the local OpenClaw extensions directory, installs runtime deps there, and inspects the loaded plugin.
+Or cross-platform: `npm run install:openclaw` (see repo root `README.md`).
+
+By default this syncs into the current user’s OpenClaw extensions folder (`%USERPROFILE%\.openclaw\extensions\kalshi-plugin` on Windows, `~/.openclaw/extensions/kalshi-plugin` on Unix), installs runtime deps there, and inspects the loaded plugin.
 
 ## Status
 This package is sandbox-test ready, not production-ready. Core sandbox reads, place/cancel, and filled-position reduce lifecycle have been validated. Packaging for public beta still needs cleanup.

@@ -1,9 +1,16 @@
 param(
-  [string]$RepoRoot = "C:\Users\Mr Claw\.openclaw\workspace\kalshi-openclaw",
-  [string]$ExtensionRoot = "C:\Users\Mr Claw\.openclaw\extensions\kalshi-plugin"
+  [string]$RepoRoot = "",
+  [string]$ExtensionRoot = ""
 )
 
 $ErrorActionPreference = 'Stop'
+
+if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+  $RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
+}
+if ([string]::IsNullOrWhiteSpace($ExtensionRoot)) {
+  $ExtensionRoot = [System.IO.Path]::Combine($env:USERPROFILE, '.openclaw', 'extensions', 'kalshi-plugin')
+}
 
 Write-Host "Building plugin..."
 Set-Location $RepoRoot
